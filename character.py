@@ -1,36 +1,33 @@
-import pygame
-import math
+from base_entitiy import BaseEntity
 
-class Character:
-    def __init__(self, screen_width, screen_height):
-        self.size = 50
-        self.angle = 0
-        self.pos = [screen_width // 2, screen_height // 2]
-        self.speed = 5
 
-    def rotate(self, mouse_x, mouse_y):
-        self.angle = math.atan2(mouse_y - self.pos[1], mouse_x - self.pos[0]) + math.pi / 2
+# Character Class (Derived from BaseEntity)
+class Character(BaseEntity):
+    def __init__(self, pos, size, angle=0, hp=100):
+        super().__init__(pos, size)
+        self.angle = angle
+        self.hp = hp
 
-    def move(self, keys):
-        if keys[pygame.K_w]:
-            self.pos[1] -= self.speed
-        if keys[pygame.K_s]:
-            self.pos[1] += self.speed
-        if keys[pygame.K_a]:
-            self.pos[0] -= self.speed
-        if keys[pygame.K_d]:
-            self.pos[0] += self.speed
-
-    def get_projectile_start_pos(self):
-        # Adjust the starting position based on the character's direction
-        x = self.pos[0] + self.size * math.cos(self.angle)
-        y = self.pos[1] + self.size * math.sin(self.angle)
-        return x, y
+    def update(self):
+        pass  # Implement specific logic for characters
 
     def draw(self, screen):
-        # Draw the character (equilateral triangle)
-        rotated_points = [(x * math.cos(self.angle) - y * math.sin(self.angle) + self.pos[0],
-                           x * math.sin(self.angle) + y * math.cos(self.angle) + self.pos[1])
-                          for x, y in [(0, -self.size // 2), (-self.size // 2, self.size // 2),
-                                       (self.size // 2, self.size // 2)]]
-        pygame.draw.polygon(screen, (0, 0, 0), rotated_points)
+        pass  # Implement drawing logic for characters
+
+# NPC Class (Derived from Character)
+class NPC(Character):
+    def __init__(self, pos, size, angle, hp, npc_type):
+        super().__init__(pos, size, angle, hp)
+        self.npc_type = npc_type
+
+    def update(self):
+        pass  # Implement specific logic for NPCs
+
+# Player Class (Derived from Character)
+class Player(Character):
+    def __init__(self, pos, size, angle, hp, player_type):
+        super().__init__(pos, size, angle, hp)
+        self.player_type = player_type
+
+    def update(self):
+        pass  # Implement specific logic for players

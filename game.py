@@ -1,64 +1,47 @@
 import pygame
-from character import Character
-from environment import Environment
-from projectile import Projectile
+import math
+import sys
+from environment import EnvironmentElement, Projectile
+from character import Player, NPC
 
+# Game Class
 class Game:
     def __init__(self, screen_width, screen_height):
+        pygame.init()
+
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         pygame.display.set_caption("My Game")
 
-        self.character = Character(screen_width, screen_height)
-        self.environment = Environment()
-        self.projectiles = []
+        self.entities = [
+            EnvironmentElement((100, 100), (50, 50), "rectangle", math.radians(45)),
+            EnvironmentElement((200, 200), (30, 30), "circle"),
+            EnvironmentElement((300, 300), (40, 40), "triangle", math.radians(30)),
+            NPC((400, 400), (60, 60), 0, 100, "enemy"),
+            Player((500, 500), (60, 60), 0, 100, "player"),
+            Projectile((600, 600), (10, 10), math.radians(45), 5),
+        ]
 
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                # Left mouse button (shoot)
-                start_pos = self.character.get_projectile_start_pos()
-                projectile = Projectile(start_pos, self.character.angle, 3)
-                self.projectiles.append(projectile)
 
     def update(self):
         keys = pygame.key.get_pressed()
 
-        # Move character
-        self.character.move(keys)
-
-        # Rotate character towards the mouse
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        self.character.rotate(mouse_x, mouse_y)
-
-        # Move environment
-        self.environment.move(keys, 5)
-
-        # Move and remove projectiles
-        for projectile in self.projectiles:
-            projectile.move()
-            if not (0 <= projectile.pos[0] <= self.screen_width and 0 <= projectile.pos[1] <= self.screen_height):
-                self.projectiles.remove(projectile)
+        for entity in self.entities:
+            entity.move(keys)
+            entity.update()
 
     def draw(self):
-        # Draw the background
         self.screen.fill((255, 255, 255))
 
-        # Draw environment
-        self.environment.draw(self.screen)
+        for entity in self.entities:
+            entity.draw(self.screen)
 
-        # Draw character
-        self.character.draw(self.screen)
-
-        # Draw projectiles
-        for projectile in self.projectiles:
-            projectile.draw(self.screen)
-
-        # Update the display
         pygame.display.flip()
 
     def run(self):
@@ -69,5 +52,4 @@ class Game:
             self.update()
             self.draw()
 
-            # Cap the frame rate
             clock.tick(60)
