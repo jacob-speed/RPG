@@ -1,7 +1,8 @@
 import pygame
 import math
 import sys
-from environment import EnvironmentElement, Projectile
+from environment import EnvironmentElement
+from projectile import Projectile
 from character import Player, NPC
 
 # Game Class
@@ -20,7 +21,6 @@ class Game:
             EnvironmentElement((300, 300), (40, 40), "triangle", math.radians(30)),
             NPC((400, 400), (60, 60), 0, 100, "enemy"),
             Player((500, 500), (60, 60), 0, 100, "player"),
-            Projectile((600, 600), (10, 10), math.radians(45), 5),
         ]
 
     def handle_events(self):
