@@ -1,6 +1,4 @@
 import pygame
-import math
-import sys
 from character import Character
 from environment import Environment
 from projectile import Projectile
@@ -51,15 +49,10 @@ class Game:
         self.screen.fill((255, 255, 255))
 
         # Draw environment
-        for rect in self.environment.rects:
-            pygame.draw.rect(self.screen, (0, 0, 0), rect)
+        self.environment.draw(self.screen)
 
         # Draw character
-        rotated_points = [(x * math.cos(self.character.angle) - y * math.sin(self.character.angle) + self.character.pos[0],
-                           x * math.sin(self.character.angle) + y * math.cos(self.character.angle) + self.character.pos[1])
-                          for x, y in [(0, -self.character.size // 2), (-self.character.size // 2, self.character.size // 2),
-                                       (self.character.size // 2, self.character.size // 2)]]
-        pygame.draw.polygon(self.screen, (0, 0, 0), rotated_points)
+        self.character.draw(self.screen)
 
         # Draw projectiles
         for projectile in self.projectiles:

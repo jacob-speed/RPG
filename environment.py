@@ -18,3 +18,8 @@ class Environment:
                 rect.x += speed
             if keys[pygame.K_d]:
                 rect.x -= speed
+
+    def draw(self, screen):
+        # Draw environment rectangles
+        for rect in self.rects:
+            pygame.draw.rect(screen, (0, 0, 0), rect)

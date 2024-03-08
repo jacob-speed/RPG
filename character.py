@@ -26,3 +26,11 @@ class Character:
         x = self.pos[0] + self.size * math.cos(self.angle)
         y = self.pos[1] + self.size * math.sin(self.angle)
         return x, y
+
+    def draw(self, screen):
+        # Draw the character (equilateral triangle)
+        rotated_points = [(x * math.cos(self.angle) - y * math.sin(self.angle) + self.pos[0],
+                           x * math.sin(self.angle) + y * math.cos(self.angle) + self.pos[1])
+                          for x, y in [(0, -self.size // 2), (-self.size // 2, self.size // 2),
+                                       (self.size // 2, self.size // 2)]]
+        pygame.draw.polygon(screen, (0, 0, 0), rotated_points)
