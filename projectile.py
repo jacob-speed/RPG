@@ -5,8 +5,8 @@ from base_entitiy import BaseEntity
 
 # Projectile Class (Derived from BaseEntity)
 class Projectile(BaseEntity):
-    def __init__(self, pos, size, angle, speed, color=(255, 0, 0)):
-        super().__init__(pos, size, speed, color=color)
+    def __init__(self, pos, size, angle, speed, color):
+        super().__init__(pos, size, speed, color)
         self.angle = angle
 
     def update(self):

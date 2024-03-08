@@ -3,21 +3,21 @@ import pygame
 
 # BaseEntity Class
 class BaseEntity:
-    def __init__(self, pos, size, speed=0, color=(0, 0, 0)):
+    def __init__(self, pos, size, color):
+        position = list(pos)
         self.pos = list(pos)
         self.size = size
-        self.speed = speed
         self.color = color
 
-    def move(self, keys):
+    def move(self, keys, player_speed):
         if keys[pygame.K_w]:
-            self.pos[1] -= self.speed
+            self.pos[1] += player_speed
         if keys[pygame.K_s]:
-            self.pos[1] += self.speed
+            self.pos[1] -= player_speed
         if keys[pygame.K_a]:
-            self.pos[0] -= self.speed
+            self.pos[0] += player_speed
         if keys[pygame.K_d]:
-            self.pos[0] += self.speed
+            self.pos[0] -= player_speed
 
     def update(self):
         pass

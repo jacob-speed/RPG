@@ -1,11 +1,13 @@
 import pygame
+import math
 from base_entitiy import BaseEntity
 
 
 # Character Class (Derived from BaseEntity)
 class Character(BaseEntity):
-    def __init__(self, pos, size, angle=0, hp=100, color=(0, 0, 255)):
-        super().__init__(pos, size, color=color)
+    def __init__(self, pos, size, color, speed, angle=0, hp=100, ):
+        super().__init__(pos, size, color)
+        self.speed = speed
         self.angle = angle
         self.hp = hp
 
@@ -13,14 +15,18 @@ class Character(BaseEntity):
         pass  # Implement specific logic for characters
 
     def draw(self, screen):
-        adjusted_pos = (self.pos[0] - self.size[0] // 2, self.pos[1] - self.size[1] // 2)
-        pygame.draw.rect(screen, self.color, pygame.Rect(adjusted_pos[0], adjusted_pos[1], self.size[0], self.size[1]))
+        # Draw the character (equilateral triangle)
+        rotated_points = [(x * math.cos(self.angle) - y * math.sin(self.angle) + self.pos[0],
+                           x * math.sin(self.angle) + y * math.cos(self.angle) + self.pos[1])
+                          for x, y in [(0, -self.size[1] // 2), (-self.size[0] // 2, self.size[1] // 2),
+                                       (self.size[0] // 2, self.size[1] // 2)]]
+        pygame.draw.polygon(screen, self.color, rotated_points)
 
 
 # NPC Class (Derived from Character)
 class NPC(Character):
-    def __init__(self, pos, size, angle, hp, npc_type, color=(255, 0, 0)):
-        super().__init__(pos, size, angle, hp, color=color)
+    def __init__(self, pos, size, color, speed, angle, hp, npc_type):
+        super().__init__(pos, size, color, speed, angle, hp)
         self.npc_type = npc_type
 
     def update(self):
@@ -28,9 +34,16 @@ class NPC(Character):
 
 # Player Class (Derived from Character)
 class Player(Character):
-    def __init__(self, pos, size, angle, hp, player_type, color=(0, 255, 0)):
-        super().__init__(pos, size, angle, hp, color=color)
-        self.player_type = player_type
+    def __init__(self, pos, size, color, speed, angle, hp):
+        super().__init__(pos, size, color, speed, angle, hp)
+
+    def rotate(self, mouse_x, mouse_y):
+        self.angle = math.atan2(mouse_y - self.pos[1], mouse_x - self.pos[0]) + math.pi / 2
 
     def update(self):
-        pass  # Implement specific logic for players
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        self.rotate(mouse_x, mouse_y)
+
+    def move(self, keys, player_speed):
+        # Player is always centred. Overload move method so that player doesn't move.
+        pass

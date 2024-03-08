@@ -4,8 +4,8 @@ from base_entitiy import BaseEntity
 
 
 class EnvironmentElement(BaseEntity):
-    def __init__(self, pos, size, element_type, angle=0, color=(0, 0, 0)):
-        super().__init__(pos, size, color=color)
+    def __init__(self, pos, size, color, element_type, angle=0):
+        super().__init__(pos, size, color)
         self.element_type = element_type
         self.angle = angle
 
