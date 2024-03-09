@@ -45,8 +45,9 @@ class Game:
     def create_projectile(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
         start_pos = (self.screen_width // 2, self.screen_height // 2)
-        angle = math.atan2(mouse_y - start_pos[1], mouse_x - start_pos[0])
-        new_projectile = Projectile(start_pos, size=(5, 5), color=(0, 0, 0), angle=angle, speed=10)
+        angle = math.atan2(mouse_y - self.screen_height // 2, mouse_x - self.screen_width // 2)
+        start_pos = (start_pos[0] + math.cos(angle) * 44, start_pos[1] + math.sin(angle) * 44)
+        new_projectile = Projectile(start_pos, size=(5, 5), color=(0, 0, 0), angle=angle, speed=15)
         self.entities.append(new_projectile)
 
     def update(self):
@@ -54,12 +55,19 @@ class Game:
 
         move = True
         for entity in self.entities:
-            if entity.player_collision(keys, self.player.speed, self.player):
+            if entity.entity_collision(keys, self.player.speed, self.player):
                 move = False
 
         for entity in self.entities:
             entity.move(keys, self.player.speed, move)
             entity.update()
+            # handle events for projectiles
+            if isinstance(entity, Projectile):
+                if not (-100 <= entity.pos[0] <= self.screen_width + 100 and -100 <= entity.pos[1] <= self.screen_height + 100):
+                    self.entities.remove(entity)
+                for other_entity in self.entities:
+                    if entity.entity_collision(keys, self.player.speed, other_entity):
+                        self.entities.remove(entity)
 
     def draw(self):
         self.screen.fill((255, 255, 255))

@@ -20,15 +20,15 @@ class BaseEntity:
                 self.pos[0] -= speed
 
     # Check for collisions with other entities
-    def player_collision(self, keys, speed, player):
+    def entity_collision(self, keys, speed, entity):
         current_pos = self.pos.copy()
         self.move(keys, speed, True)
         collisions = False
-        if player != self and isinstance(player, BaseEntity):
+        if entity != self and isinstance(entity, BaseEntity):
             if pygame.Rect(self.pos[0] - self.size[0] // 2, self.pos[1] - self.size[1] // 2,
                            self.size[0], self.size[1]).colliderect(
-                pygame.Rect(player.pos[0] - player.size[0] // 2, player.pos[1] - player.size[1] // 2,
-                            player.size[0], player.size[1])):
+                pygame.Rect(entity.pos[0] - entity.size[0] // 2, entity.pos[1] - entity.size[1] // 2,
+                            entity.size[0], entity.size[1])):
                 collisions = True
         self.pos = current_pos
         return collisions

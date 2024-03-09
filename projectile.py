@@ -17,5 +17,4 @@ class Projectile(BaseEntity):
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, (int(self.pos[0]), int(self.pos[1])), self.size[0] // 2)
 
-#TODO need to delete projectiles once they are significantly off the screen
 
