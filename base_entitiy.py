@@ -1,5 +1,5 @@
 import pygame
-
+import math
 
 # BaseEntity Class
 class BaseEntity:
@@ -38,3 +38,11 @@ class BaseEntity:
 
     def draw(self, screen):
         pass
+
+    def distance_to_point(self, point_pos):
+        distance = math.sqrt((self.pos[0] - point_pos[0]) ** 2 + (self.pos[1] - point_pos[1]) ** 2)
+        return distance
+
+    def angle_to_point(self, point_pos):
+        angle = math.atan2(point_pos[1] - self.pos[1], point_pos[0] - self.pos[0]) + math.pi / 2
+        return angle

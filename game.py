@@ -3,12 +3,14 @@ import math
 import sys
 from environment import EnvironmentElement
 from projectile import Projectile
-from character import Player, NPC
+from player import Player
+from npc import NPC
 
 # Game Class
 class Game:
     def __init__(self, screen_width, screen_height):
         pygame.init()
+        self.time = 0
         self.color = {
             'black': (0, 0, 0),
             'white': (255, 255, 255),
@@ -28,9 +30,13 @@ class Game:
         self.entities = [
             self.player,
             EnvironmentElement((100, 100), (50, 50), self.color["black"],"rectangle", math.radians(45)),
-            EnvironmentElement((200, 200), (30, 30), self.color["cyan"],"circle"),
-            EnvironmentElement((300, 300), (40, 40), self.color["red"],"triangle", math.radians(30)),
-            # NPC((400, 400), (60, 60), 0, 100, "enemy"),
+            EnvironmentElement((100, 800), (30, 30), self.color["cyan"],"circle"),
+            EnvironmentElement((800, 800), (40, 40), self.color["red"],"triangle", math.radians(30)),
+            EnvironmentElement((800, 100), (40, 40), self.color["gray"], "triangle", math.radians(80)),
+            NPC((400, 400), (60, 60), self.color["red"], 1, 0, 10, 200, "enemy"),
+            NPC((500, 400), (60, 60), self.color["red"], 2, 0, 10, 200, "enemy"),
+            NPC((400, 500), (60, 60), self.color["red"], 3, 0, 10, 200, "enemy"),
+            NPC((500, 500), (60, 60), self.color["red"], 2, 0, 10, 200, "enemy")
         ]
 
 
@@ -51,23 +57,30 @@ class Game:
         self.entities.append(new_projectile)
 
     def update(self):
+        self.time += 1
         keys = pygame.key.get_pressed()
 
+        # check if player is colliding with other entities
         move = True
         for entity in self.entities:
             if entity.entity_collision(keys, self.player.speed, self.player):
                 move = False
 
         for entity in self.entities:
-            entity.move(keys, self.player.speed, move)
-            entity.update()
+            # handle events for NPCs
+            if isinstance(entity, NPC):
+                entity.update_agro(self.player)
             # handle events for projectiles
             if isinstance(entity, Projectile):
-                if not (-100 <= entity.pos[0] <= self.screen_width + 100 and -100 <= entity.pos[1] <= self.screen_height + 100):
+                if entity.is_beyond_screen(self.screen_width, self.screen_height):
                     self.entities.remove(entity)
                 for other_entity in self.entities:
                     if entity.entity_collision(keys, self.player.speed, other_entity):
                         self.entities.remove(entity)
+            # handle generic events
+            entity.move(keys, self.player.speed, move)
+            entity.update()
+
 
     def draw(self):
         self.screen.fill((255, 255, 255))
@@ -86,3 +99,10 @@ class Game:
             self.draw()
 
             clock.tick(60)
+
+
+# todo I occasionally get an error "ValueError: list.remove(x): x not in list" which is something to do with removing
+#  projectiles for the entities list
+# todo start creating a map
+# todo start making attacks to damage, kill enemies lose hit points
+# todo NPC's can currently walk though other entities

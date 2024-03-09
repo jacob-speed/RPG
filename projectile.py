@@ -17,4 +17,8 @@ class Projectile(BaseEntity):
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, (int(self.pos[0]), int(self.pos[1])), self.size[0] // 2)
 
+    def is_beyond_screen(self, width, length):
+        is_within_screen = -100 <= self.pos[0] <= width + 100 and -100 <= self.pos[1] <= length + 100
+        return not is_within_screen
+
 
