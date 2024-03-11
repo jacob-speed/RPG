@@ -15,7 +15,7 @@ class NPC(Character):
         self.sight = sight
         self.player_pos = (0, 0)
 
-    def update(self):
+    def move(self):
         if self.agro:
             self.moving = True
             self.angle = self.angle_to_point(self.player_pos)
@@ -32,7 +32,7 @@ class NPC(Character):
             self.pos[0] += self.speed * math.sin(self.angle)
             self.pos[1] -= self.speed * math.cos(self.angle)
 
-    def move(self, keys, speed, move):
+    def update_position(self, keys, speed, move):
         if move:
             if keys[pygame.K_w]:
                 self.pos[1] += speed

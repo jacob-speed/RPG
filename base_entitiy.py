@@ -8,7 +8,7 @@ class BaseEntity:
         self.size = size
         self.color = color
 
-    def move(self, keys, speed, move):
+    def update_position(self, keys, speed, move):
         if move:
             if keys[pygame.K_w]:
                 self.pos[1] += speed
@@ -22,7 +22,7 @@ class BaseEntity:
     # Check for collisions with other entities
     def entity_collision(self, keys, speed, entity):
         current_pos = self.pos.copy()
-        self.move(keys, speed, True)
+        self.update_position(keys, speed, True)
         collisions = False
         if entity != self and isinstance(entity, BaseEntity):
             if pygame.Rect(self.pos[0] - self.size[0] // 2, self.pos[1] - self.size[1] // 2,
@@ -33,7 +33,7 @@ class BaseEntity:
         self.pos = current_pos
         return collisions
 
-    def update(self):
+    def move(self):
         pass
 
     def draw(self, screen):

@@ -11,9 +11,6 @@ class Character(BaseEntity):
         self.angle = angle
         self.hp = hp
 
-    def update(self):
-        pass  # Implement specific logic for characters
-
     def draw(self, screen):
         # Draw the character (equilateral triangle)
         rotated_points = [(x * math.cos(self.angle) - y * math.sin(self.angle) + self.pos[0],

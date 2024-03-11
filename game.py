@@ -78,8 +78,9 @@ class Game:
                     if entity.entity_collision(keys, self.player.speed, other_entity):
                         self.entities.remove(entity)
             # handle generic events
-            entity.move(keys, self.player.speed, move)
-            entity.update()
+            entity.update_position(keys, self.player.speed, move)
+            entity.move()
+           # entity.update()
 
 
     def draw(self):

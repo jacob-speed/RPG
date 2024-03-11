@@ -9,9 +9,6 @@ class EnvironmentElement(BaseEntity):
         self.element_type = element_type
         self.angle = angle
 
-    def update(self):
-        pass
-
     def draw(self, screen):
         if self.element_type == "rectangle":
             rotated_surface = pygame.Surface(self.size, pygame.SRCALPHA)

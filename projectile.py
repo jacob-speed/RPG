@@ -10,7 +10,7 @@ class Projectile(BaseEntity):
         self.angle = angle
         self.speed = speed
 
-    def update(self):
+    def move(self):
         self.pos[0] += self.speed * math.cos(self.angle)
         self.pos[1] += self.speed * math.sin(self.angle)
 

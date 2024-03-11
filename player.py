@@ -10,10 +10,6 @@ class Player(Character):
     def rotate(self, mouse_x, mouse_y):
         self.angle = self.angle_to_point((mouse_x, mouse_y))
 
-    def update(self):
+    def update_position(self, keys, speed, move):
         mouse_x, mouse_y = pygame.mouse.get_pos()
         self.rotate(mouse_x, mouse_y)
-
-    def move(self, keys, speed, move):
-        # Player is always centred. Overload move method so that player doesn't move.
-        pass
