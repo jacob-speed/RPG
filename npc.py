@@ -35,6 +35,14 @@ class NPC(Character):
                 self.pos[0] += self.speed * math.sin(self.angle)
                 self.pos[1] -= self.speed * math.cos(self.angle)
 
+    def update_agro(self, player):
+        self.player_pos = player.pos
+        player_distance = self.distance_to_point(self.player_pos)
+        if player_distance < self.sight:
+            self.agro = True
+        elif player_distance > self.sight * 2:
+            self.agro = False
+
     def update_pos(self, speed, move):
         keys = pygame.key.get_pressed()
         if move:
@@ -50,11 +58,3 @@ class NPC(Character):
             if keys[pygame.K_d]:
                 self.pos[0] -= speed
                 self.anchor_pos[0] -= speed
-
-    def update_agro(self, player):
-        self.player_pos = player.pos
-        player_distance = self.distance_to_point(self.player_pos)
-        if player_distance < self.sight:
-            self.agro = True
-        elif player_distance > self.sight * 2:
-            self.agro = False

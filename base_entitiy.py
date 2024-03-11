@@ -9,19 +9,17 @@ class BaseEntity:
         self.size = size
         self.color = color
 
-    def update_pos(self, player_speed, move):
-        keys = pygame.key.get_pressed()
-        if move:
-            if keys[pygame.K_w]:
-                self.pos[1] += player_speed
-            if keys[pygame.K_s]:
-                self.pos[1] -= player_speed
-            if keys[pygame.K_a]:
-                self.pos[0] += player_speed
-            if keys[pygame.K_d]:
-                self.pos[0] -= player_speed
+    def angle_to_point(self, point_pos):
+        angle = math.atan2(point_pos[1] - self.pos[1], point_pos[0] - self.pos[0]) + math.pi / 2
+        return angle
 
-    # Check for collisions with other entities
+    def distance_to_point(self, point_pos):
+        distance = math.sqrt((self.pos[0] - point_pos[0]) ** 2 + (self.pos[1] - point_pos[1]) ** 2)
+        return distance
+
+    def draw(self, screen):
+        pass
+
     def entity_collision(self, player_speed, entity):
         current_pos = self.pos.copy()
         entity_pos = entity.pos.copy()
@@ -50,13 +48,14 @@ class BaseEntity:
     def move(self, move):
         pass
 
-    def draw(self, screen):
-        pass
-
-    def distance_to_point(self, point_pos):
-        distance = math.sqrt((self.pos[0] - point_pos[0]) ** 2 + (self.pos[1] - point_pos[1]) ** 2)
-        return distance
-
-    def angle_to_point(self, point_pos):
-        angle = math.atan2(point_pos[1] - self.pos[1], point_pos[0] - self.pos[0]) + math.pi / 2
-        return angle
+    def update_pos(self, player_speed, move):
+        keys = pygame.key.get_pressed()
+        if move:
+            if keys[pygame.K_w]:
+                self.pos[1] += player_speed
+            if keys[pygame.K_s]:
+                self.pos[1] -= player_speed
+            if keys[pygame.K_a]:
+                self.pos[0] += player_speed
+            if keys[pygame.K_d]:
+                self.pos[0] -= player_speed
