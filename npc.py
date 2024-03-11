@@ -15,24 +15,28 @@ class NPC(Character):
         self.sight = sight
         self.player_pos = (0, 0)
 
-    def move(self):
-        if self.agro:
-            self.moving = True
-            self.angle = self.angle_to_point(self.player_pos)
-        if random.random() > 0.98:
-            self.moving = not self.moving
-            anchor_distance = self.distance_to_point(self.anchor_pos)
-            anchor_angle = self.angle_to_point(self.anchor_pos)
-            if anchor_distance > 1000:
-                self.angle = anchor_angle
-            else:
-                sd = math.cos((anchor_distance * math.pi) / 1000) * math.pi
-                self.angle = (random.gauss(anchor_angle, sd))
-        if self.moving:
-            self.pos[0] += self.speed * math.sin(self.angle)
-            self.pos[1] -= self.speed * math.cos(self.angle)
+    def move(self, move):
+        if not move:
+            pass
+        else:
+            if self.agro:
+                self.moving = True
+                self.angle = self.angle_to_point(self.player_pos)
+            if random.random() > 0.98:
+                self.moving = not self.moving
+                anchor_distance = self.distance_to_point(self.anchor_pos)
+                anchor_angle = self.angle_to_point(self.anchor_pos)
+                if anchor_distance > 1000:
+                    self.angle = anchor_angle
+                else:
+                    sd = math.cos((anchor_distance * math.pi) / 1000) * math.pi
+                    self.angle = (random.gauss(anchor_angle, sd))
+            if self.moving:
+                self.pos[0] += self.speed * math.sin(self.angle)
+                self.pos[1] -= self.speed * math.cos(self.angle)
 
-    def update_position(self, keys, speed, move):
+    def update_pos(self, speed, move):
+        keys = pygame.key.get_pressed()
         if move:
             if keys[pygame.K_w]:
                 self.pos[1] += speed

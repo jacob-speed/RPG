@@ -1,6 +1,7 @@
 import pygame
 import math
 
+
 # BaseEntity Class
 class BaseEntity:
     def __init__(self, pos, size, color):
@@ -8,21 +9,26 @@ class BaseEntity:
         self.size = size
         self.color = color
 
-    def update_position(self, keys, speed, move):
+    def update_pos(self, player_speed, move):
+        keys = pygame.key.get_pressed()
         if move:
             if keys[pygame.K_w]:
-                self.pos[1] += speed
+                self.pos[1] += player_speed
             if keys[pygame.K_s]:
-                self.pos[1] -= speed
+                self.pos[1] -= player_speed
             if keys[pygame.K_a]:
-                self.pos[0] += speed
+                self.pos[0] += player_speed
             if keys[pygame.K_d]:
-                self.pos[0] -= speed
+                self.pos[0] -= player_speed
 
     # Check for collisions with other entities
-    def entity_collision(self, keys, speed, entity):
+    def entity_collision(self, player_speed, entity):
         current_pos = self.pos.copy()
-        self.update_position(keys, speed, True)
+        entity_pos = entity.pos.copy()
+        self.update_pos(player_speed, True)
+        entity.update_pos(player_speed, True)
+        self.move(True)
+        entity.move(True)
         collisions = False
         if entity != self and isinstance(entity, BaseEntity):
             if pygame.Rect(self.pos[0] - self.size[0] // 2, self.pos[1] - self.size[1] // 2,
@@ -31,9 +37,17 @@ class BaseEntity:
                             entity.size[0], entity.size[1])):
                 collisions = True
         self.pos = current_pos
+        entity.pos = entity_pos
         return collisions
 
-    def move(self):
+    def entity_collision_to_type(self, player_speed, entity_list, entity_type):
+        collision = False
+        for entity in entity_list:
+            if isinstance(entity, entity_type) and self.entity_collision(player_speed, entity):
+                collision = True
+        return collision
+
+    def move(self, move):
         pass
 
     def draw(self, screen):
