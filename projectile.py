@@ -20,5 +20,3 @@ class Projectile(BaseEntity):
     def is_beyond_screen(self, width, length):
         is_within_screen = -100 <= self.pos[0] <= width + 100 and -100 <= self.pos[1] <= length + 100
         return not is_within_screen
-
-

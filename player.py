@@ -1,6 +1,6 @@
 import pygame
-import math
 from character import Character
+
 
 # Player Class (Derived from Character)
 class Player(Character):

@@ -18,6 +18,3 @@ class Character(BaseEntity):
                           for x, y in [(0, -self.size[1] // 2), (-self.size[0] // 2, self.size[1] // 2),
                                        (self.size[0] // 2, self.size[1] // 2)]]
         pygame.draw.polygon(screen, self.color, rotated_points)
-
-
-

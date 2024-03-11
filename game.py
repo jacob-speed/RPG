@@ -6,6 +6,7 @@ from projectile import Projectile
 from player import Player
 from npc import NPC
 
+
 # Game Class
 class Game:
     def __init__(self, screen_width, screen_height):
@@ -26,19 +27,18 @@ class Game:
         self.screen_height = screen_height
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         pygame.display.set_caption("My Game")
-        self.player = Player((screen_width//2, screen_height//2), (60, 60), self.color["magenta"],3, 0, 100)
+        self.player = Player((screen_width//2, screen_height//2), (60, 60), self.color["magenta"], 3, 0, 100)
         self.entities = [
             self.player,
-            EnvironmentElement((100, 100), (50, 50), self.color["black"],"rectangle", math.radians(45)),
-            EnvironmentElement((100, 800), (30, 30), self.color["cyan"],"circle"),
-            EnvironmentElement((800, 800), (40, 40), self.color["red"],"triangle", math.radians(30)),
+            EnvironmentElement((100, 100), (50, 50), self.color["black"], "rectangle", math.radians(45)),
+            EnvironmentElement((100, 800), (30, 30), self.color["cyan"], "circle"),
+            EnvironmentElement((800, 800), (40, 40), self.color["red"], "triangle", math.radians(30)),
             EnvironmentElement((800, 100), (40, 40), self.color["gray"], "triangle", math.radians(80)),
             NPC((400, 400), (60, 60), self.color["red"], 1, 0, 10, 200, "enemy"),
             NPC((500, 400), (60, 60), self.color["red"], 2, 0, 10, 200, "enemy"),
             NPC((400, 500), (60, 60), self.color["red"], 3, 0, 10, 200, "enemy"),
             NPC((500, 500), (60, 60), self.color["red"], 2, 0, 10, 200, "enemy")
         ]
-
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -80,8 +80,7 @@ class Game:
             # handle generic events
             entity.update_position(keys, self.player.speed, move)
             entity.move()
-           # entity.update()
-
+            # entity.update()
 
     def draw(self):
         self.screen.fill((255, 255, 255))
@@ -106,4 +105,4 @@ class Game:
 #  projectiles for the entities list
 # todo start creating a map
 # todo start making attacks to damage, kill enemies lose hit points
-# todo NPC's can currently walk though other entities
+# todo NPCs can currently walk though other entities
