@@ -30,10 +30,10 @@ class Game:
         self.player = Player((screen_width//2, screen_height//2), (60, 60), self.color["magenta"], 3, 0, 100)
         self.entities = [
             self.player,
-            NPC((400, 400), (60, 60), self.color["red"], 1, 0, 10, 200, "enemy"),
-            NPC((500, 400), (60, 60), self.color["red"], 2, 0, 10, 200, "enemy"),
-            NPC((400, 500), (60, 60), self.color["red"], 3, 0, 10, 200, "enemy"),
-            NPC((500, 500), (60, 60), self.color["red"], 2, 0, 10, 200, "enemy")
+            NPC((400, 400), (60, 60), self.color["red"], 1, 0, 10, 100, "enemy"),
+            NPC((500, 400), (60, 60), self.color["red"], 2, 0, 10, 100, "enemy"),
+            NPC((400, 500), (60, 60), self.color["red"], 3, 0, 10, 100, "enemy"),
+            NPC((500, 500), (60, 60), self.color["red"], 2, 0, 10, 100, "enemy")
         ]
 
     def create_projectile(self):

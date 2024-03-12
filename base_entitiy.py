@@ -21,10 +21,10 @@ class BaseEntity:
         pass
 
     def entity_collision(self, player_speed, entity):
-        current_pos = self.pos.copy()
-        entity_pos = entity.pos.copy()
         self.update_pos(player_speed, True)
         entity.update_pos(player_speed, True)
+        current_pos = self.pos.copy()
+        entity_pos = entity.pos.copy()
         self.move(True)
         entity.move(True)
         collisions = False
@@ -36,6 +36,8 @@ class BaseEntity:
                 collisions = True
         self.pos = current_pos
         entity.pos = entity_pos
+        self.update_pos(-player_speed, True)
+        entity.update_pos(-player_speed, True)
         return collisions
 
     def entity_collision_to_type(self, player_speed, entity_list, entity_type):
