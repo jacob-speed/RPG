@@ -7,6 +7,7 @@ from projectile import Projectile
 from player import Player
 from npc import NPC
 from fire_projectile import FireProjectile
+from background import Background
 
 
 # Game Class
@@ -23,6 +24,7 @@ class Game:
             'cyan': (0, 255, 255),
             'magenta': (255, 0, 255),
             'gray': (128, 128, 128),
+            'light gray': (224, 224, 224)
         }
         self.screen_width = screen_width
         self.screen_height = screen_height
@@ -37,11 +39,13 @@ class Game:
                              0,
                              100)
         self.entities = [
+            Background((self.screen_width//2, self.screen_height//2), (screen_width, screen_height), self.color["light gray"], "test"),
             self.player,
             NPC((400, 400), (60, 60), self.color["red"]),
             NPC((500, 400), (60, 60), self.color["red"]),
             NPC((400, 500), (60, 60), self.color["red"]),
-            NPC((500, 500), (60, 60), self.color["red"])
+            NPC((500, 500), (60, 60), self.color["red"]),
+
         ]
 
     # def create_projectile(self):
@@ -108,7 +112,7 @@ class Game:
             elif isinstance(entity, Projectile):
                 if entity.is_beyond_screen(self.screen_width, self.screen_height):
                     self.entities.remove(entity)
-                elif entity.entity_collision_to_type(self.player.speed, self.entities, BaseEntity):
+                elif entity.entity_collision_to_type(self.player.speed, self.entities, NPC) or entity.entity_collision_to_type(self.player.speed, self.entities, EnvironmentElement):
                     self.entities.remove(entity)
             # handle generic events
             entity.update_pos(self.player.speed, not player_collision)
