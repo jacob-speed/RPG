@@ -6,11 +6,10 @@ from character import Character
 
 # NPC Class (Derived from Character)
 class NPC(Character):
-    def __init__(self, pos, size, color, speed, angle, hp, sight, npc_type):
-        super().__init__(pos, size, color, speed, angle, hp)
+    def __init__(self, pos, size, color, speed=2, sight=20, skills=None, angle=0, hp=100):
+        super().__init__(pos, size, color, speed, skills, angle, hp)
         self.moving = False
         self.agro = False
-        self.npc_type = npc_type
         self.anchor_pos = list(pos)
         self.sight = sight
         self.player_pos = (0, 0)

@@ -1,7 +1,7 @@
 from game import Game
 
 if __name__ == "__main__":
-    game = Game(800, 500)
+    game = Game(1600, 1000)
     game.run()
 
 # todo expand generate_map() function to create randomised maps
