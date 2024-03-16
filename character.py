@@ -24,6 +24,11 @@ class Character(BaseEntity):
                           for x, y in [(0, -self.size[1] // 2), (-self.size[0] // 2, self.size[1] // 2),
                                        (self.size[0] // 2, self.size[1] // 2)]]
         pygame.draw.polygon(screen, self.color, rotated_points)
+        # Render HP text
+        font = pygame.font.Font(None, 36)  # You can change the font and size as needed
+        hp_text = font.render(f"{self.hp}", True, (255, 0, 0))  # White color
+        text_rect = hp_text.get_rect(center=(self.pos[0], self.pos[1] - 50))  # Position text in the center of the character
+        screen.blit(hp_text, text_rect)
 
     def next_skill(self):
         if len(self.skills) == 0:

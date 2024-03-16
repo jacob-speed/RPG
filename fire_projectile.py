@@ -12,5 +12,5 @@ class FireProjectile(Skill):
         self.speed = speed
 
     def use(self, pos, angle):
-        new_projectile = Projectile(pos, self.size, self.color, angle, self.speed)
+        new_projectile = Projectile(pos, self.size, self.color, angle, self.speed, self.damage)
         return new_projectile

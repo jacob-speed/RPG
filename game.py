@@ -69,21 +69,24 @@ class Game:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                skill = self.player.use_skill()
-                if isinstance(skill, Projectile):
-                    self.entities.append(skill)
+                return True
 
     def run(self):
         clock = pygame.time.Clock()
         self.generate_map()
         while True:
-            self.handle_events()
             self.update()
             self.draw()
 
             clock.tick(60)
 
     def update(self):
+        mouse_clicked = self.handle_events()
+        if mouse_clicked:
+            skill = self.player.use_skill()
+            if isinstance(skill, Projectile):
+                self.entities.append(skill)
+
         # check if player is colliding with environment
         player_collision = self.player.entity_collision_to_type(self.player.speed, self.entities, EnvironmentElement)
         for entity in self.entities:
@@ -94,9 +97,15 @@ class Game:
                     npc_collision = True
                 elif entity.entity_collision_to_type(self.player.speed, self.entities, Player):
                     npc_collision = True
+                elif entity.entity_collision_to_type(self.player.speed, self.entities, Projectile):
+                    for proj in self.entities:
+                        if isinstance(proj, Projectile) and entity.entity_collision(self.player.speed, proj):
+                            entity.hp -= proj.damage
+                if entity.hp <= 0:
+                    self.entities.remove(entity)
                 entity.update_agro(self.player)
             # handle events for projectiles
-            if isinstance(entity, Projectile):
+            elif isinstance(entity, Projectile):
                 if entity.is_beyond_screen(self.screen_width, self.screen_height):
                     self.entities.remove(entity)
                 elif entity.entity_collision_to_type(self.player.speed, self.entities, BaseEntity):

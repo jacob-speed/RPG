@@ -5,10 +5,11 @@ from base_entitiy import BaseEntity
 
 # Projectile Class (Derived from BaseEntity)
 class Projectile(BaseEntity):
-    def __init__(self, pos, size, color, angle, speed):
+    def __init__(self, pos, size, color, angle, speed, damage):
         super().__init__(pos, size, color)
         self.angle = angle
         self.speed = speed
+        self.damage = damage
 
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, (int(self.pos[0]), int(self.pos[1])), self.size[0] // 2)
