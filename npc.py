@@ -6,7 +6,7 @@ from character import Character
 
 # NPC Class (Derived from Character)
 class NPC(Character):
-    def __init__(self, pos, size, color, speed=2, sight=100, skills=None, angle=0, hp=100):
+    def __init__(self, pos, size, color, speed=2, sight=300, skills=None, angle=0, hp=100):
         super().__init__(pos, size, color, speed, skills, angle, hp)
         self.moving = False
         self.agro = False
@@ -21,7 +21,7 @@ class NPC(Character):
             if self.agro:
                 self.moving = True
                 self.angle = self.angle_to_point(self.player_pos)
-            if random.random() > 0.98:
+            if random.random() > 0.999:
                 self.moving = not self.moving
                 anchor_distance = self.distance_to_point(self.anchor_pos)
                 anchor_angle = self.angle_to_point(self.anchor_pos)
@@ -39,7 +39,7 @@ class NPC(Character):
         player_distance = self.distance_to_point(self.player_pos)
         if player_distance < self.sight:
             self.agro = True
-        elif player_distance > self.sight * 2:
+        elif player_distance > self.sight * 1.2:
             self.agro = False
 
     def update_pos(self, speed, move):

@@ -34,3 +34,4 @@ class EnvironmentElement(BaseEntity):
             ]
             pygame.draw.polygon(screen, self.color, rotated_points)
 
+

@@ -8,6 +8,7 @@ from player import Player
 from npc import NPC
 from fire_projectile import FireProjectile
 from background import Background
+from map import Map
 
 
 # Game Class
@@ -62,10 +63,10 @@ class Game:
         pygame.display.flip()
 
     def generate_map(self):
-        self.entities.append(EnvironmentElement((self.screen_width//2 - 1500, self.screen_height//2), (300, 3300), self.color["black"], "rectangle"))
-        self.entities.append(EnvironmentElement((self.screen_width//2 + 1500, self.screen_height//2), (300, 3300), self.color["black"], "rectangle"))
-        self.entities.append(EnvironmentElement((self.screen_width//2, self.screen_height//2 - 1500), (3300, 300), self.color["black"], "rectangle"))
-        self.entities.append(EnvironmentElement((self.screen_width//2, self.screen_height//2 + 1500), (3300, 300), self.color["black"], "rectangle"))
+        map = Map((-1000, -1000))
+        map.load_tile(1)
+        for ele in map.environment_elements:
+            self.entities.append(ele)
 
     def handle_events(self):
         for event in pygame.event.get():

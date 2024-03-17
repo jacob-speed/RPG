@@ -4,8 +4,8 @@ if __name__ == "__main__":
     game = Game(1600, 1000)
     game.run()
 
+# todo make more skills and make player toggle between thenm
 # todo expand generate_map() function to create randomised maps
-# todo start making attacks to damage, kill enemies lose hit points
 # todo improvements to collisions
 # todo create more player attributes
 # todo create map tiles
