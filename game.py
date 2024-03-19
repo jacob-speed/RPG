@@ -41,12 +41,7 @@ class Game:
                              100)
         self.entities = [
             Background((self.screen_width//2, self.screen_height//2), (screen_width, screen_height), self.color["light gray"], "test"),
-            self.player,
-            NPC((400, 400), (60, 60), self.color["red"]),
-            NPC((500, 400), (60, 60), self.color["red"]),
-            NPC((400, 500), (60, 60), self.color["red"]),
-            NPC((500, 500), (60, 60), self.color["red"]),
-
+            self.player
         ]
 
     # def create_projectile(self):
@@ -63,10 +58,12 @@ class Game:
         pygame.display.flip()
 
     def generate_map(self):
-        map = Map((-1000, -1000))
+        map = Map((-400, -400), 300)
         map.load_tile(1)
         for ele in map.environment_elements:
             self.entities.append(ele)
+        for npc in map.mob:
+            self.entities.append(npc)
 
     def handle_events(self):
         for event in pygame.event.get():
