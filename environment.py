@@ -35,7 +35,7 @@ class EnvironmentElement(BaseEntity):
             pygame.draw.polygon(screen, self.color, rotated_points)
 
     def set_pos(self, new_pos):
-        self.pos = new_pos
+        self.pos = list(new_pos)
 
     def set_size(self, new_size):
         self.size = new_size

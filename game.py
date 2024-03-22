@@ -61,6 +61,7 @@ class Game:
         map = Map((-400, -400), 300)
         map.load_tile(1)
         for ele in map.environment_elements:
+            print(ele.pos, ele.size)
             self.entities.append(ele)
         for npc in map.mob:
             self.entities.append(npc)

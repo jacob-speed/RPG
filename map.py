@@ -21,13 +21,12 @@ class Map:
                 if tile_image.get_at((x, y)) == (0, 0, 0, 255):
                     if previous_element:
                         prev_size = self.environment_elements[-1].size
+                        prev_pos = self.environment_elements[-1].pos
                         self.environment_elements[-1].set_size((prev_size[0], prev_size[1] + self.scale))
-                        elem = self.environment_elements[-1]
-                        print(elem.pos, elem.size)
+                        self.environment_elements[-1].set_pos((prev_pos[0], prev_pos[1] + self.scale // 2))
                     else:
                         pos = (x * self.scale + self.pos[0], y * self.scale + self.pos[1])
                         ele = EnvironmentElement(pos, (self.scale, self.scale), (0, 0, 0), "rectangle")
-                        print(ele.pos, ele.size)
                         self.environment_elements.append(ele)
                         previous_element = True
                 else:
