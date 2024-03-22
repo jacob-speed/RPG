@@ -15,6 +15,7 @@ class Character(BaseEntity):
         else:
             self.skills = skills
         self.selected_skill = 0
+        self.hit = False
 
 
     def draw(self, screen):
@@ -29,6 +30,10 @@ class Character(BaseEntity):
         hp_text = font.render(f"{self.hp}", True, (255, 0, 0))  # White color
         text_rect = hp_text.get_rect(center=(self.pos[0], self.pos[1] - 50))  # Position text in the center of the character
         screen.blit(hp_text, text_rect)
+
+    def is_hit(self, damage):
+        self.hp -= damage
+        self.hit = True
 
     def next_skill(self):
         if len(self.skills) == 0:

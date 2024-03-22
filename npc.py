@@ -13,6 +13,7 @@ class NPC(Character):
         self.anchor_pos = list(pos)
         self.sight = sight
         self.player_pos = (0, 0)
+        self.hit = False
 
     def move(self, move):
         if not move:
@@ -39,6 +40,9 @@ class NPC(Character):
         player_distance = self.distance_to_point(self.player_pos)
         if player_distance < self.sight:
             self.agro = True
+        elif self.hit:
+            self.agro = True
+            self.hit = False
         elif player_distance > self.sight * 1.2:
             self.agro = False
 

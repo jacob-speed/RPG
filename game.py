@@ -32,7 +32,7 @@ class Game:
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         pygame.display.set_caption("My Game")
         main_skill = FireProjectile("main", (10, 10), self.color["black"], 10, 15)
-        sec_skill = FireProjectile("secondary", (20, 20), self.color["yellow"], 20, 10)
+        sec_skill = FireProjectile("secondary", (100, 200), self.color["yellow"], 50, 1)
         self.player = Player((screen_width//2, screen_height//2),
                              (60, 60),
                              self.color["magenta"],
@@ -103,7 +103,7 @@ class Game:
                 elif entity.entity_collision_to_type(self.player.speed, self.entities, Projectile):
                     for proj in self.entities:
                         if isinstance(proj, Projectile) and entity.entity_collision(self.player.speed, proj):
-                            entity.hp -= proj.damage
+                            entity.is_hit(proj.damage)
                 if entity.hp <= 0:
                     self.entities.remove(entity)
                 entity.update_agro(self.player)
