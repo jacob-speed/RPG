@@ -31,12 +31,13 @@ class Game:
         self.screen_height = screen_height
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         pygame.display.set_caption("My Game")
-        player_skill = FireProjectile("main", (10, 10), self.color["black"], 10, 15)
+        main_skill = FireProjectile("main", (10, 10), self.color["black"], 10, 15)
+        sec_skill = FireProjectile("secondary", (20, 20), self.color["yellow"], 20, 10)
         self.player = Player((screen_width//2, screen_height//2),
                              (60, 60),
                              self.color["magenta"],
                              3,
-                             [player_skill],
+                             [main_skill, sec_skill],
                              0,
                              100)
         self.entities = [
@@ -61,7 +62,6 @@ class Game:
         map = Map((-400, -400), 300)
         map.load_tile(1)
         for ele in map.environment_elements:
-            print(ele.pos, ele.size)
             self.entities.append(ele)
         for npc in map.mob:
             self.entities.append(npc)
@@ -116,3 +116,8 @@ class Game:
             # handle generic events
             entity.update_pos(self.player.speed, not player_collision)
             entity.move(not npc_collision)
+
+        keys = pygame.key.get_pressed()
+        for i in range(pygame.K_0, pygame.K_9 + 1):
+            if keys[i]:
+                self.player.select_skill(i - pygame.K_0)

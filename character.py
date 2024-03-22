@@ -37,15 +37,15 @@ class Character(BaseEntity):
             self.selected_skill = (self.selected_skill + 1) % len(self.skills)
 
     def previous_skill(self):
-        if len(self.skills) == 0:
-            pass
-        else:
+        if len(self.skills) > 0:
             self.selected_skill = (self.selected_skill - 1) % len(self.skills)
 
+    def select_skill(self, skill_num):
+        if len(self.skills) > 0:
+            self.selected_skill = skill_num - 1
+
     def use_skill(self):
-        if len(self.skills) == 0:
-            pass
-        else:
+        if len(self.skills) > 0:
             angle = self.angle_to_point(pygame.mouse.get_pos()) - math.pi/2
             pos = (self.pos[0] + math.cos(angle) * 45, self.pos[1] + math.sin(angle) * 45)
             return self.skills[self.selected_skill].use(pos, angle)
